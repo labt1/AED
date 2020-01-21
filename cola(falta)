@@ -1,0 +1,50 @@
+#include<iostream>
+
+using namespace std;
+
+class Nodo{
+    int dato;
+    Nodo* next;
+public:
+        Nodo(int d){dato=d;};
+        friend class Cola;
+};
+
+class Cola{
+    Nodo* cola;
+
+    public:
+        Cola(int d){
+            cola=new Nodo(d);
+            cola->dato=d;
+        }
+
+        Nodo* obtener(int n){
+            Nodo* res=cola;
+            Nodo* aux=cola;
+            for(int i=0;i<n;i++){
+                res=aux->next;
+            }
+            return res;
+        }
+
+        void ingresar(int d){
+            int it=0;
+            Nodo* aux = cola;
+            while(aux->next!=NULL){
+                aux=aux->next;
+                it++;
+            }
+            aux->next=new Nodo*(d);
+        }
+
+};
+
+int main(){
+    Cola c(0);
+    for (int i = 1; i < 11; i++){
+        c.ingresar(i);
+    }
+    c.imprimir();
+    return 0;
+}
