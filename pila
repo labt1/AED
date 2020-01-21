@@ -1,0 +1,53 @@
+#include<iostream>
+
+using namespace std;
+
+class Nodo{
+    int dato;
+    Nodo* next;
+public:
+        Nodo(int d){dato=d;};
+        friend class Pila;
+};
+
+class Pila{
+    Nodo* pila;
+
+public:
+        Pila(int d){
+            pila=new Nodo(d);
+            pila->dato=d;
+        }
+
+        void ingresar(int d){
+            Nodo* aux=pila;
+            pila=new Nodo(d);
+            pila->next=aux; 
+        }
+            
+        void sacar(){
+            Nodo* aux=pila->next;
+            delete pila;
+            pila=aux;    
+        }
+
+
+        void imprimir(){
+            Nodo* i=pila;
+            while(i!=NULL){
+                cout<<i->dato<<" -> ";
+                i=i->next;
+            }
+            cout<<"NULL"<<endl;
+        }
+};
+
+int main(){
+    Pila p(0);
+    for (int i = 1; i < 11; i++){
+        p.ingresar(i);
+    }
+    p.sacar();
+    p.imprimir();
+    return 0;
+}
