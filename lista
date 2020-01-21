@@ -1,0 +1,127 @@
+#include<iostream>
+
+using namespace std;
+
+class Nodo{
+    int dato;
+    Nodo* next;
+public:
+        Nodo(int d){dato=d;};
+        friend class Lista;
+};
+
+class Lista{
+    Nodo* head;
+    int size;    
+
+    public:
+        Lista(){
+            head = NULL;
+            size=0;
+        }
+
+        void insertar(int dato, int pos){
+            Nodo* nuevo_nodo = new Nodo(dato);
+            Nodo* temp = head;
+            if(pos!=size && size>pos){
+                for(int i=pos; i<size; i++){
+                    temp->next;
+                }
+                nuevo_nodo->next=temp->next;
+                temp->next=nuevo_nodo;
+                size++;
+            }
+
+            else {
+                if(pos==1){
+                    if (!head) {
+                        head = nuevo_nodo;} 
+                    else{
+                        nuevo_nodo->next=head;
+                        head=nuevo_nodo;
+                        while (temp->next != NULL) {
+                            temp = temp->next;
+                        }
+                        }    
+                    size++;
+                }   
+                else{
+                    if (!head) {
+                        head = nuevo_nodo;}                   
+                    else {
+                        while (temp->next != NULL) {
+                            temp = temp->next;
+                        }
+                        temp->next = nuevo_nodo;
+                    }
+                    size++;
+                }
+            }
+        }
+
+        Nodo* obtener(int n){
+            Nodo* res=head;
+            Nodo* aux=head;
+            for(int i=0;i<n;i++){
+                res=aux->next;
+            }
+            return res;
+        }
+
+        void buscar(int dato){
+            bool b=false;
+            Nodo* temp=head;
+            for(int i=0; i<size; i++){
+                if(temp->dato==dato){
+                    cout<<"El dato "<<dato<<" esta en la lista "<<"en la posicion "<<i+1<<endl;
+                    b=true;
+                    break;
+                }
+                 temp=temp->next;
+            }
+            if(b==false) cout<<"El dato no esta en la lista"<<endl;
+        }	
+
+        void eliminar_pos(int pos){
+            Nodo *temp;
+            if(pos!=size && size>pos){
+                temp=this->obtener(pos-1);
+                temp->next=this->obtener(pos+1);
+
+                this->obtener(pos)->next=NULL;
+                delete this->obtener(pos);
+                size--;
+            }
+
+            else {
+                if(pos==1){
+                    head=obtener(pos+1);
+                    delete obtener(pos);
+                    size--;
+                }   
+                else{
+                    delete obtener(pos);
+                    size--;
+                }
+            }
+        }
+
+        void print(){
+            Nodo *temp = head;
+            while(temp!=NULL){
+                cout<<temp->dato<<" -> ";
+                temp=temp->next;
+            }
+            cout<<"NULL"<<endl;
+            cout<<obtener(0)->dato<<endl;
+        }
+};
+
+int main(){
+    Lista l;
+    for (int i = 10; i < 21; i++){
+        l.insertar(i,i-9);
+    }
+    l.print();
+    return 0;
+}
